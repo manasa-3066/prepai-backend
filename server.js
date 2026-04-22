@@ -1,5 +1,7 @@
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();  // ← must be FIRST before any other require
+
+const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -8,7 +10,6 @@ const corsOptions = require("./config/corsOptions");
 const { errorHandler } = require("./middlewares/errorHandler");
 const routes = require("./routes");
 
-dotenv.config();
 connectDB();
 
 const app = express();
