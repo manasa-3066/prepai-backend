@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const { protect } = require("../middlewares/authMiddleware");
 
-router.use("/auth", require("./auth.routes"));
+router.use("/auth",      require("./auth.routes"));
 router.use("/interview", require("./interview.routes"));
-
+router.use("/skillgap",  require("./skillGap.routes"));
+router.use("/chat",      require("./chat.routes"));
 
 module.exports = router;

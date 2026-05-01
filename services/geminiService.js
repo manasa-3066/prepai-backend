@@ -133,9 +133,60 @@ const generateOverallFeedback = async ({ company, role, questions, totalScore, p
   return askGroq(prompt);
 };
 
+// ─── 5. Skill Gap Analysis ────────────────────────────────────────────────────
+const analyseSkillGap = async ({ resumeText, jobDescription }) => {
+  const prompt = `
+    You are an expert technical recruiter and career coach.
+    
+    Carefully analyse this candidate's resume against the job description.
+    
+    RESUME:
+    ${resumeText}
+    
+    JOB DESCRIPTION:
+    ${jobDescription}
+    
+    Provide a thorough skill gap analysis. Return ONLY valid JSON, no markdown:
+    {
+      "overallMatch": <number 0-100 representing how well resume matches job>,
+      "summary": "2-3 sentence honest summary of the candidate's fit for this role",
+      
+      "matchingSkills": [
+        { "skill": "skill name", "level": "beginner/intermediate/advanced" }
+      ],
+      
+      "missingSkills": [
+        {
+          "skill": "skill name",
+          "importance": "critical/important/nice-to-have",
+          "reason": "one sentence why this skill matters for the role"
+        }
+      ],
+      
+      "roadmap": [
+        {
+          "week": "Week 1-2",
+          "focus": "main topic to learn",
+          "goal": "what you will be able to do by end of this period",
+          "resources": [
+            { "title": "resource name", "type": "video/docs/course/book", "url": "actual URL if known, else empty string" }
+          ],
+          "project": "a small hands-on project to build this week to solidify learning"
+        }
+      ],
+      
+      "strengths": ["strength 1", "strength 2", "strength 3"],
+      "immediateActions": ["action 1", "action 2", "action 3"]
+    }
+  `;
+  return askGroq(prompt);
+};
+
 module.exports = {
   generateInterviewQuestion,
   generateInterviewQuestions,
   evaluateAnswer,
   generateOverallFeedback,
+  analyseSkillGap
 };
+  
